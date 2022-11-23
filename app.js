@@ -237,7 +237,7 @@ app.get("/add_post", requireAuth, async function (req, res) {
 
         //  var linkuser = await Profile.findOne({ Username: req.params.username });
             let user = await Profile.findById(decodedToken.id);
-            console.log(user.Username)
+            // console.log(user.Username)
             // console.log(linkuser.Username)
             res.render("add_post",user=user);
         } 
@@ -392,12 +392,15 @@ app.post("/login", async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const user = await Profile.findOne({ Username: username });
-
-    // console.log(user);
+    //  console.log(password)
+    // console.log(user.Password);
 
     if (user) {
 
-        if (bcrypt.compare(password, user.Password)) {
+        const validPassword = await bcrypt.compare(password, user.Password);
+        // if (!validPassword) return res.status(400).send('Invalid Email or Password.')
+
+        if (validPassword) {
 
             const token = jwt.sign(
                 {
