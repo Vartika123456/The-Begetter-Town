@@ -214,10 +214,8 @@ app.get("/add_post", requireAuth, async function (req, res) {
 
         //  var linkuser = await Profile.findOne({ Username: req.params.username });
             let user = await Profile.findById(decodedToken.id);
-            console.log("%%%%%%%%%%%%%%%%%%%%%%%%%")
             console.log(user.Username)
             // console.log(linkuser.Username)
-            console.log("%%%%%%%%%%%%%%%%%%%%%%%%%")
             res.render("add_post",user=user);
         } 
     })
